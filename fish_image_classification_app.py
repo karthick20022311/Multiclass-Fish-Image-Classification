@@ -90,36 +90,6 @@ def build_model():
 
     return model
 
-# ================= TRAIN =================
-
-@st.cache_resource
-def train_model():
-    st.write("🔧 Training MobileNet...")
-
-    model = build_model()
-
-    history = model.fit(
-        train_data,
-        validation_data=val_data,
-        epochs=EPOCHS
-    )
-
-    model.save(SAVED_MODEL_PATH)
-
-    fig, ax = plt.subplots(1, 2, figsize=(12, 4))
-
-    ax[0].plot(history.history["accuracy"])
-    ax[0].plot(history.history["val_accuracy"])
-    ax[0].set_title("Accuracy")
-
-    ax[1].plot(history.history["loss"])
-    ax[1].plot(history.history["val_loss"])
-    ax[1].set_title("Loss")
-
-    st.pyplot(fig)
-
-    return history.history["val_accuracy"][-1]
-
 # ================= LOAD MODEL =================
 
 @st.cache_resource
